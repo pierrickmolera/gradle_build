@@ -21,13 +21,14 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-    - name: Build with Gradle
-      run: gradle
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: composeUp
+      run: ./gradlew composeUp
+    
+    - name: Compose Down
+      run: ./gradlew composeDown
+      
+      
 
-    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
-    # the publishing section of your build.gradle
-    - name: Publish to GitHub Packages
-      run: gradle publish
-      env:
-        USERNAME: ${{ github.actor }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
